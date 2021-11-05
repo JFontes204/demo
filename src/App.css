@@ -45,3 +45,18 @@
     align-items: center;
     background-color: #c9d9dd;
 }
+
+.comandos {
+    padding-top: 10px;
+}
+.comandos img {
+    width: 60px;
+    cursor: pointer;
+}
+.comandos img + img {
+    margin-left: 20px;
+}
+.selected {
+    box-shadow: 10px 5px 5px #0e8eb1;
+    transform: translateZ(100px);
+}

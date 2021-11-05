@@ -5,12 +5,3 @@
     justify-content: start;
     align-items: center;
 }
-.comandos {
-    padding-top: 10px;
-}
-.comandos img {
-    width: 60px;
-}
-.comandos img + img {
-    margin-left: 20px;
-}
