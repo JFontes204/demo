@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './styles.css';
 
 function Game({ resultado }) {
-    const [resultados, setResultados] = useState([]);
+    const resultados = [];
     console.log(resultado)
     if(resultado !== undefined || resultado?.length > 1) {
-        setResultados(resultado);
+        resultados.push(resultado);
         console.log(resultado, resultados)
     }
     return (
