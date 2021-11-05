@@ -6,6 +6,9 @@ import GamerHome from './components/GamerHome';
 
 export default function App() {
   const [itemGust, setItemGust] = useState(0);
+  const [resultado, setResultado] = useState({});
+  const resultados = [];
+  
 
   return (
     <div className="app">
@@ -18,20 +21,64 @@ export default function App() {
       </header>
       <div className="corpo-do-jogo">
         <GamerHome selectedItem={selectedItem} />
-        <Game />
+        <Game resultado={resultado} />
+        
+      {/*   {
+          setInterval(() => resultado.length > 1 ? resultados.push(resultado) : null, 1000)
+        }
+        
+        <div className="game">
+            <h2>Partidas</h2>
+            <div className="partidas">
+                <ol>
+                {                        
+                    resultados.length > 0 ? 
+                    resultados.map((res, index) => {
+                        return (
+                            <li key={index} className={res.status === 1 ? 'green' : 'red'}>{ res.msg }</li>
+                        );
+                    })
+                    :
+                    <p>Carregando...</p>
+                }
+                </ol>
+            </div>
+        </div> */}
+    
         <GamerGust selectedItem={itemGust}/>
       </div>
     </div>
   );
 
-  function selectedItem(item) {
+  function selectedItem(itemHome) {
     setItemGust(jogadaDoGust())
+    setResultado(jogada(itemHome, itemGust));
   }
 }
 
 
-function jogada(userHome){
-
+function jogada(userHome, userGust){
+  if(userHome === userGust) {
+    return { msg: 'Empate!', status: -1};
+  }
+  if(userHome === 1 && userGust === 2) {
+    return { msg: 'Você perdeu!', status: 0};
+  }
+  if(userHome === 1 && userGust === 3) {
+    return { msg: 'Você ganhou!', status: 1};
+  }
+  if(userHome === 2 && userGust === 1) {
+    return { msg: 'Você ganhou!', status: 1};
+  }
+  if(userHome === 2 && userGust === 3) {
+    return { msg: 'Você perdeu!', status: 0};
+  }
+  if(userHome === 3 && userGust === 1) {
+    return { msg: 'Você perdeu!', status: 0};
+  }
+  if(userHome === 3 && userGust === 2) {
+    return { msg: 'Você ganhou!', status: 1};
+  }
 }
 
 
