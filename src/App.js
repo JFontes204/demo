@@ -1,4 +1,7 @@
 import './App.css';
+import Game from './components/Game';
+import GamerGust from './components/GamerGust';
+import GamerHome from './components/GamerHome';
 
 function App() {
   return (
@@ -11,9 +14,9 @@ function App() {
         </div>
       </header>
       <div className="corpo-do-jogo">
-        <div className="gamer-home">Você</div>
-        <div className="game">Ganhou</div>
-        <div className="gamer-gust">PC</div>
+        <GamerHome />
+        <Game />
+        <GamerGust />
       </div>
     </div>
   );
