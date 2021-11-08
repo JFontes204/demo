@@ -39,7 +39,7 @@
     background-color: #b31111;
 }
 .corpo-do-jogo {
-    height: 75vh;
+    height: 80vh;
     display: flex;
     justify-content: space-around;
     align-items: center;

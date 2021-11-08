@@ -3,56 +3,40 @@ import './App.css';
 import Game from './components/Game';
 import GamerGust from './components/GamerGust';
 import GamerHome from './components/GamerHome';
+import { useDispatch } from 'react-redux';
 
 export default function App() {
-  const [itemGust, setItemGust] = useState(0);
-  const [resultado, setResultado] = useState({});
-  const resultados = [];
+  const [itemGust, setItemGust] = useState();
   
+  const dispatch = useDispatch();
 
   return (
     <div className="app">
       <header className="app-header">
         <h1>Jogo Pedra Papel Tesoura</h1>
         <div className="start-stop">
-          <button className="btn-start">Começar</button>
-          <button className="btn-stop">Terminar</button>
+          <button className="btn-start" onClick={startMatch}>Começar</button>
+          <button className="btn-stop" onClick={endMatch}>Terminar</button>
         </div>
       </header>
       <div className="corpo-do-jogo">
         <GamerHome selectedItem={selectedItem} />
-        <Game resultado={resultado} />
-        
-      {/*   {
-          setInterval(() => resultado.length > 1 ? resultados.push(resultado) : null, 1000)
-        }
-        
-        <div className="game">
-            <h2>Partidas</h2>
-            <div className="partidas">
-                <ol>
-                {                        
-                    resultados.length > 0 ? 
-                    resultados.map((res, index) => {
-                        return (
-                            <li key={index} className={res.status === 1 ? 'green' : 'red'}>{ res.msg }</li>
-                        );
-                    })
-                    :
-                    <p>Carregando...</p>
-                }
-                </ol>
-            </div>
-        </div> */}
-    
+        <Game />
         <GamerGust selectedItem={itemGust}/>
       </div>
     </div>
   );
 
   function selectedItem(itemHome) {
-    setItemGust(jogadaDoGust())
-    setResultado(jogada(itemHome, itemGust));
+    const gust = jogadaDoGust();
+    setItemGust(gust);
+    dispatch({ type: 'ADD_MATCH', pontuacao: jogada(itemHome, gust), gameState: true });
+  }
+  function endMatch() {
+    dispatch({ type: 'END_MATCH', pontuacao: {}, gameState: false });
+  }
+  function startMatch() {
+    dispatch({ type: 'START_MATCH', pontuacao: {}, gameState: true });
   }
 }
 
@@ -79,9 +63,11 @@ function jogada(userHome, userGust){
   if(userHome === 3 && userGust === 2) {
     return { msg: 'Você ganhou!', status: 1};
   }
+  return { msg: 'Empate!', status: -1};
 }
 
 
 function jogadaDoGust() {
   return Math.floor(Math.random() * 3) + 1;
 }
+

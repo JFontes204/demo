@@ -1,27 +1,33 @@
 import React from 'react';
 import './styles.css';
+import { useSelector } from 'react-redux';
 
-function Game({ resultado }) {
-    const resultados = [];
-    console.log(resultado)
-    if(resultado !== undefined || resultado?.length > 1) {
-        resultados.push(resultado);
-        console.log(resultado, resultados)
-    }
+function Game() {
+    let gameState;
+    const jogadas = useSelector(state => {
+        gameState = state.gameState;
+        return state.data
+    });
+
     return (
         <div className="game">
             <h2>Partidas</h2>
             <div className="partidas">
                 <ol>
                 {
-                    resultados.length > 0 ? 
-                    resultados.map((res, index) => {
+                    jogadas.length ? 
+                    jogadas.map((res, index) => {
                         return (
-                            <li key={index} className={res.status === 1 ? 'green' : 'red'}>{ res.msg }</li>
+                            <li key={index} 
+                                className={res.status === 1 ? 'green' : res.status === 0 ? 'red' : 'soft-black'}>
+                                { res.msg }
+                            </li>
                         );
                     })
-                    :
-                    <p>Carregando...</p>
+                    : gameState ?
+                    <p>Sem jogadas para mostarar!</p>
+                    : 
+                    <p>Jogo ainda não começou!</p>
                 }
                 </ol>
             </div>
@@ -29,4 +35,4 @@ function Game({ resultado }) {
     );
 } 
 
-export default React.memo(Game)
+export default Game;
